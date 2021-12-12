@@ -1,0 +1,27 @@
+version: '2'
+services:
+  application:
+    container_name: application-server
+    build:
+      context: docker/application
+      dockerfile: Dockerfile
+      args:
+        APP_VERSION: 0.0.1
+    image: salesystem-application:latest
+    ports:
+      - 8080:8080
+    networks:
+      - docker-network
+  postgres:
+    container_name: postgres-server
+    build:
+      context: docker/postgresql
+      dockerfile: Dockerfile
+    image: salesystem-postgres:latest
+    ports:
+      - 5432:5432
+    networks:
+      - docker-network
+networks:
+  docker-network:
+    driver: bridge
